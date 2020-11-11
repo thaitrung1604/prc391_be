@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import prc391.lib.models.UserModel;
 import prc391.lib.repositories.UsersRepository;
 
+import java.util.List;
+
 @Service
 public class UsersServiceImpl implements UsersService {
     private final UsersRepository usersRepository;
@@ -20,14 +22,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserModel getUserDetail(String email, Integer id) {
-        if (email != null && !email.isEmpty()) {
-            return this.usersRepository.getUserDetail(email);
-        } else if (id != null) {
+    public List<UserModel> getUserDetail(String email, Integer id) {
+        if (id != null) {
             return this.usersRepository.getUserById(id);
+        } else {
+            return this.usersRepository.getUserDetail(email);
         }
-
-        return null;
     }
 
     @Override

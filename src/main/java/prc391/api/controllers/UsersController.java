@@ -7,6 +7,8 @@ import prc391.api.services.UsersService;
 import prc391.lib.models.UserModel;
 import prc391.lib.models.common.BaseResponseModel;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UsersController {
@@ -28,9 +30,9 @@ public class UsersController {
     @GetMapping("/user")
     public ResponseEntity<BaseResponseModel> getUserDetail(@RequestParam(value = "email", required = false) final String email,
                                                            @RequestParam(value = "id", required = false) final Integer id) {
-        UserModel user = this.usersService.getUserDetail(email, id);
+        List<UserModel> user = this.usersService.getUserDetail(email, id);
 
-        if (user == null) {
+        if (user.isEmpty()) {
             return ResponseEntity.ok(new BaseResponseModel("User not found!"));
         }
 
@@ -42,7 +44,7 @@ public class UsersController {
         return ResponseEntity.ok(new BaseResponseModel(this.usersService.updateUserInfo(userModel)));
     }
 
-    @DeleteMapping("/update")
+    @DeleteMapping("/delete")
     public ResponseEntity<BaseResponseModel> deleteUser(@RequestParam("id") final Integer id) {
         return ResponseEntity.ok(new BaseResponseModel(this.usersService.deleteUser(id)));
     }

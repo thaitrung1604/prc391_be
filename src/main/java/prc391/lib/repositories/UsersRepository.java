@@ -3,6 +3,8 @@ package prc391.lib.repositories;
 import org.apache.ibatis.annotations.*;
 import prc391.lib.models.UserModel;
 
+import java.util.List;
+
 @Mapper
 public interface UsersRepository {
 
@@ -22,7 +24,8 @@ public interface UsersRepository {
     int registerAccount(@Param("user") UserModel userDetail);
 
     @Select({
-            "SELECT " +
+            "<script>" +
+                    "SELECT " +
                     "    id as id, " +
                     "    organization_name as organizationName, " +
                     "    email as email, " +
@@ -32,10 +35,13 @@ public interface UsersRepository {
                     "    photo as photo " +
                     "FROM " +
                     "    tbl_user " +
+                    "<if test='email != null'>" +
                     "WHERE " +
-                    "    email = #{email}"
+                    "    email = #{email}" +
+                    "</if>" +
+                    "</script>"
     })
-    UserModel getUserDetail(@Param("email") String email);
+    List<UserModel> getUserDetail(@Param("email") String email);
 
     @Select({
             "SELECT " +
@@ -51,10 +57,10 @@ public interface UsersRepository {
                     "WHERE " +
                     "    id = #{id}"
     })
-    UserModel getUserById(@Param("id") int id);
+    List<UserModel> getUserById(@Param("id") int id);
 
     @Update({
-            "UPDATE tbl_user SET organization_name = {user.organizationName}, " +
+            "UPDATE tbl_user SET organization_name = #{user.organizationName}, " +
                     "                   email = #{user.email}, " +
                     "                   phone_number = #{user.phoneNumber}, " +
                     "                   address = #{user.address}, " +
