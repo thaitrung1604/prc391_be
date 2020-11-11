@@ -16,7 +16,7 @@ public class GoogleUtils {
 
     public GoogleResponse getUserInfo(final String idToken) throws IOException {
         String link = env.getProperty("google.link.get.user_info") + idToken;
-        String response = Request.Get(link).execute().returnContent().asString();
+        String response = Request.Get(link).execute().returnContent().asString().replaceAll("\n","");
         ObjectMapper mapper = new ObjectMapper();
         GoogleResponse googlePojo = mapper.readValue(response, GoogleResponse.class);
 

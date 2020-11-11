@@ -7,4 +7,5 @@ import java.io.IOException;
 
 public interface AuthenticationService {
     BaseResponseModel login(String tokenId) throws IOException;
+    BaseResponseModel checkAuthenUser(String token);
 }
