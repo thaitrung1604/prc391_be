@@ -66,4 +66,9 @@ public interface JobsRepository {
             "DELETE FROM tbl_job WHERE id = #{id}"
     })
     int deletePost(@Param("id") int id);
+
+    @Delete({
+            "DELETE FROM tbl_job WHERE owner_id = #{id}"
+    })
+    int deletePostByUser(@Param("id") int ownerId);
 }
