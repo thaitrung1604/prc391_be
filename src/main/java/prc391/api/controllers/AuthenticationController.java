@@ -1,6 +1,8 @@
 package prc391.api.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 import prc391.api.services.AuthenticationService;
 import prc391.lib.models.common.BaseResponseModel;
@@ -27,7 +29,9 @@ public class AuthenticationController {
     }
 
     @GetMapping("/authenUser")
-    public BaseResponseModel checkAuthenUser(@RequestParam("token") final String token) {
+    public BaseResponseModel checkAuthenUser(@RequestHeader HttpHeaders header) {
+        String headerToken = header.get("authorization").toString();
+        String token = headerToken.substring(7, headerToken.length() - 1);
         return this.authenticationService.checkAuthenUser(token);
     }
 }

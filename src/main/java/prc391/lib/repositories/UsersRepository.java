@@ -14,12 +14,14 @@ public interface UsersRepository {
                     "     email, " +
                     "     phone_number, " +
                     "     address, " +
-                    "     role_id) " +
+                    "     role_id," +
+                    "     photo) " +
                     "    values (#{user.organizationName}, " +
                     "            #{user.email}, " +
                     "            #{user.phoneNumber}, " +
                     "            #{user.address}, " +
-                    "            #{user.roleId})"
+                    "            #{user.roleId}," +
+                    "            #{user.photo})"
     })
     int registerAccount(@Param("user") UserModel userDetail);
 
